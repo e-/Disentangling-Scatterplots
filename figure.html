@@ -1,0 +1,163 @@
+<!doctype html>
+
+<html>
+    <head>
+<style>
+body{
+    font-family: Roboto;
+}
+
+#header {
+    margin-top: 70px;
+    margin-bottom: 80px;
+    margin-right:10px;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+h1{
+    margin: 0;
+    margin-top:8px;
+    text-align: right;
+    font-size: 24px;
+}
+
+#header div {
+    height: 12.5%;
+}
+
+small {
+    text-align: center;
+    position: relative;
+    top: -3px;
+    font-style: italic;
+}
+
+#con2 {
+    margin-left: 10px;
+}
+
+.ticks {
+    display: flex;
+    text-align: center;
+}
+
+.tick {
+    width: 9.09%;
+    font-style: italic;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 3px;
+    font-style: italic;
+}
+
+.border {
+    border: 1px solid white;
+}
+
+h3 {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    margin-left: 8px;
+    margin-right: 63px;
+    padding-top: 22px;
+}
+
+h4 {
+    text-align: center;
+    font-size: 1.4em;
+    margin: 0;
+    margin-top: 5px;
+}
+
+.info {
+    display: flex;
+}
+
+</style>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+<script>
+function img(src) {
+    return $('<img>').attr('src', src)
+}
+
+function div() {
+    return $('<div>');
+}
+
+root = 'traverse_result/';
+kld = [0.00, 0.00, 0.00, 0.00, 0.49, 2.02, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.27, 0.00, 0.36, 1.30, 0.00, 0.30, 1.43, 0.44, 0.00, 0.49, 0.00, 0.00, 0.30, 1.05, 0.00, 0.00, 0.63, 1.90, 1.03];
+n = 8;
+m = 11;
+min = -2.5
+max = 2.5;
+
+names = [
+    'corr',
+    'density',
+    'pos_u',
+    'pos_v',
+    'variance',
+    'scatter',
+    'skew_y',
+    'skew_x'
+]
+
+kld = kld.sort().reverse();
+
+function setup(name, container, subfig) {
+    info = div().appendTo(container).addClass('info');
+    info.append(img(root + name + '_ori.png').addClass('border'));
+    info.append($('<h3>').text('Original Image'));
+    info.append(img(root + name + '_recon.png').addClass('border'));
+    info.append($('<h3>').text('Reconstructed Image'));
+
+    container.append(img(root + name + '.png'))
+
+    ticks = div().addClass('ticks').appendTo(container);    
+
+    r = max - min;
+    r /= (m - 1);
+
+    for(let i =0;i<m;i++) {
+        tick = div().addClass('tick').appendTo(ticks).text(d3.format('.1f')(min + i * r));
+    }
+    
+    $('<h2>').appendTo(container).text('Latent Value')
+    $('<h4>').appendTo(container).text(subfig);
+}
+
+function header(container) {
+    for(let i=0;i<n;i++) {
+        li = $('<div>').appendTo(container);
+        li.append($('<h1>').text(names[i]));
+        li.append($('<small>').text('(KL: ' + d3.format('.2f')(kld[i]) + ')'));
+    }        
+}
+
+</script>
+    </head>
+<body>
+    <div style="display:flex">
+        <div id="header" class="con">
+        </div>
+        <div id="con1" class="con"></div>
+        <div id="con2" class="con"></div>
+    </div>
+    <script>
+        header($('#header'));
+        setup('seed_0', $('#con1'), '(a) Gaussian');
+        setup('seed_1', $('#con2'), '(b) Linear');
+    </script>
+</body>
+</html>
