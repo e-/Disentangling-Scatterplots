@@ -56,7 +56,6 @@ class ConvVAE(nn.Module):
         z = self.reparameterize(mu, logvar)
         return self.decode(z), mu, logvar
 
-
 class LargeConvVAE(nn.Module):
     def __init__(self, nb_latents):
         super(LargeConvVAE, self).__init__()
