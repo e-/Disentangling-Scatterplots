@@ -37,7 +37,7 @@ def traverse(args):
 
     FloatTensor = torch.FloatTensor
 
-    # update kld from training logs. 
+    # TODO: update kld to the final KL divergence values from training logs. 
     # kld is used to horizontally order latent dimensions in the output images (largest to smallest)
     kld = [0.00, 0.00, 0.00, 0.00, 0.49, 2.02, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.00, 0.27, 0.00, 0.36, 1.30, 0.00, 0.30, 1.43, 0.44, 0.00, 0.49, 0.00, 0.00, 0.30, 1.05, 0.00, 0.00, 0.63, 1.90, 1.03]
 
@@ -81,7 +81,7 @@ def traverse(args):
             padding=1, pad_value=255)
 
 def parse():
-    parser = argparse.ArgumentParser(description='traversing the latent space of beta-VAE from the test images')
+    parser = argparse.ArgumentParser(description='Traverse the latent space of beta-VAE using test images as an input')
 
     parser.add_argument('model', type=str, metavar='model_path',
                         help='path to the trained model')
@@ -90,7 +90,7 @@ def parse():
     parser.add_argument('--latents', type=int, default=32, metavar='N',
                         help='number of latents (default: 32)')
     parser.add_argument('--features', type=int, default=8, metavar='N',
-                        help='number of features to traverse (default: 10)')
+                        help='number of features to traverse (default: 8)')
     parser.add_argument('--img-size', type=int, default=64, metavar='N',
                         help='input img size (default: 64)')    
     parser.add_argument('--partitions', type=int, default=11, metavar='N',
