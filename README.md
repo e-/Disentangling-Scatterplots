@@ -18,7 +18,7 @@ torchvision==0.2.2
 2. Download the scatterplot images: [https://www.kaggle.com/jaeminjo/scatterplotimages](https://www.kaggle.com/jaeminjo/scatterplotimages)
 3. Create a subdirectory named `all` under the `images` directory, unzip the image archive, and put the images in the subdirectory. The source codes will look up `images/all/*.png` for training images by default.
 
-## Training
+## Train the Network
 
 To train a β-VAE on the training images, run `python train.py`. This will generate a Torch model in the root directory (`bvae.pt` by default) as well as training logs (`training_logs/` by default). Note that the model and logs will be overwritten if you rerun the code. We also provide a pre-trained model, `bvae_pretrained.pt`.
 
@@ -75,7 +75,7 @@ optional arguments:
   --output output_path  path to the output directory
 ```
 
-## Compute Correlation
+## Compute the Correlation between Predicted and Perceived Distances
 
 Run `python corr.py <path_to_model>`, e.g., `python corr.py bvae_pretrained.pt` to measure Pearson's *ρ* between human-perceived distances and predicted distances. By default, the script will train a neural network with a single hidden layer (with 32 neurons) to approximate the distance. All the latent dimensions will be used, but if you want to use the top `N` latent dimensions with the largest KL divergences, use the ``--bvae-features N`` flag. If you built your own model, you must provide the KL divergences of the latent dimensions. See **Important Notes** above. If you want to include scagnostics measures in the input, use the ``--use-scag`` flag.
 
