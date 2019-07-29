@@ -20,7 +20,7 @@ torchvision==0.2.2
 
 ## Train the Network
 
-To train a β-VAE on the training images, run `python train.py`. This will generate a Torch model in the root directory (`bvae.pt` by default) as well as training logs (`training_logs/` by default). Note that the model and logs will be overwritten if you rerun the code. We also provide a pre-trained model, `bvae_pretrained.pt`.
+To train a β-VAE on the training images, run `python train.py`. This will generate a Torch model in the root directory (`bvae.pt` by default) as well as training logs (in a subdirectory`training_logs/` by default). Note that the model and logs will be overwritten if you rerun the code. We also provide a pre-trained model, `bvae_pretrained.pt`.
 
 ```
 usage: train.py [-h] [--data path] [--eta L] [--beta B] [--latents N]
@@ -49,9 +49,9 @@ optional arguments:
 
 ## Latent Traversals 
 
-To traverse the latent space, run `python traverse.py <path_to_model>`, e.g., `python traverse.py bvae_pretrained.pt`. This will perform latent traversals using images in the directory `test_images` as an input. The results will be saved in a separate directory (`traverse_result` by default). To reproduce Figure 1 in the paper, open `figure.html` on a Web browser. 
+To traverse the latent space, run `python traverse.py <path_to_model>`, e.g., `python traverse.py bvae_pretrained.pt`. This will perform latent traversals using images in the directory `test_images` as an input. The results will be saved in a separate directory (`traverse_result` by default). To reproduce Figure 1 in the paper, open `figure.html` on a Web browser after running the code. 
 
-**Important Notes**: Since the training procedure is stochastic, the order of latent dimensions from the largest KL divergence to the smallest will change if you rerun the training procedure. To include only the top `N` latent dimensions with the largest KL divergences in visualization, you need to provide the KL divergence of each latent dimension obtained from the training procedure. Open the `training_logs/log.txt` and go to the last line. Copy the KL divergences (it is an array with as many floating values as the number of latent dimensions you used) and paste it into `traverse.py`, `corr.py`, and `figure.html` (search for 'TODO' in the codes for the exact line). If you are using the pre-trained model, you can skip this.
+**Important Notes**: Since the training procedure is stochastic, the order of latent dimensions from the largest KL divergence to the smallest will change if you rerun the training procedure. To include only the top `N` latent dimensions with the largest KL divergences in visualization, you need to provide the KL divergence of each latent dimension obtained from the training procedure. Open `training_logs/log.txt` and go to the last line. Copy the KL divergences (it is an array of as many floating values as the number of latent dimensions you used) and paste it into `traverse.py`, `corr.py`, and `figure.html` (search for 'TODO' in the codes to find the exact line). If you are using the pre-trained model, you can skip this.
 
 ```
 usage: traverse.py [-h] [--input path] [--latents N] [--features N]
